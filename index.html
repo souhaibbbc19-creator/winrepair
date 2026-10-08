@@ -267,6 +267,101 @@
   .contact { color: var(--accent); text-decoration: none; font-weight: 500; }
   .contact:hover { text-decoration: underline; }
 
+
+  /* Background art and motion */
+  .hero { position: relative; overflow: hidden; isolation: isolate; }
+  .hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(37, 99, 235, 0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(37, 99, 235, 0.07) 1px, transparent 1px);
+    background-size: 44px 44px;
+    mask-image: radial-gradient(ellipse at 60% 40%, #000 30%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse at 60% 40%, #000 30%, transparent 75%);
+    z-index: -2;
+  }
+  .blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(70px);
+    opacity: 0.55;
+    z-index: -1;
+    pointer-events: none;
+  }
+  .blob-1 {
+    width: 380px; height: 380px;
+    background: #93c5fd;
+    top: -120px; left: -100px;
+    animation: drift 14s ease-in-out infinite;
+  }
+  .blob-2 {
+    width: 320px; height: 320px;
+    background: #c7d2fe;
+    bottom: -140px; right: -80px;
+    animation: drift 18s ease-in-out infinite reverse;
+  }
+  @keyframes drift {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(40px, 30px) scale(1.08); }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .hero .eyebrow, .hero h1, .hero .lead, .hero .cta {
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards;
+  }
+  .hero h1 { animation-delay: 0.1s; }
+  .hero .lead { animation-delay: 0.2s; }
+  .hero .cta { animation-delay: 0.3s; }
+  .hero-shot-wrap {
+    opacity: 0;
+    animation: fadeUp 0.9s ease 0.4s forwards;
+  }
+  .hero-shot { animation: float 6s ease-in-out infinite; }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+  .hero-shot:hover { animation-play-state: paused; }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(26px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .features .reveal:nth-child(2) { transition-delay: 0.08s; }
+  .features .reveal:nth-child(3) { transition-delay: 0.16s; }
+  .features .reveal:nth-child(4) { transition-delay: 0.24s; }
+  .features .reveal:nth-child(5) { transition-delay: 0.32s; }
+
+  .feature { transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease; }
+  .feature:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 32px -18px rgba(30, 58, 138, 0.35);
+    border-color: #bfdbfe;
+  }
+  .feature:hover .feature-icon { transform: scale(1.08); background: #dbeafe; }
+  .feature-icon { transition: transform 0.25s ease, background 0.25s ease; }
+
+  .steps li { transition: transform 0.2s ease, border-color 0.2s ease; }
+  .steps li:hover { transform: translateX(4px); border-color: #bfdbfe; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation: none !important;
+      transition: none !important;
+    }
+    .reveal, .hero .eyebrow, .hero h1, .hero .lead, .hero .cta, .hero-shot-wrap {
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  }
+
   /* Responsive */
   @media (max-width: 900px) {
     .hero .container { grid-template-columns: 1fr; gap: 40px; }
@@ -302,6 +397,8 @@
 
 <main id="top">
   <header class="hero">
+  <div class="blob blob-1" aria-hidden="true"></div>
+  <div class="blob blob-2" aria-hidden="true"></div>
     <div class="container">
       <div>
         <span class="eyebrow">Version 1.0 &middot; Windows 10 and 11</span>
@@ -312,7 +409,7 @@
           <span class="meta">Run as Administrator</span>
         </div>
       </div>
-      <div>
+      <div class="hero-shot-wrap">
         <a class="hero-shot" href="screenshot-dashboard.jpg" target="_blank" rel="noopener">
           <img src="screenshot-dashboard.jpg" alt="WinRepair dashboard showing repair tasks and Auto Monitor status">
         </a>
@@ -323,41 +420,41 @@
 
   <section id="features">
     <div class="container">
-      <div class="section-head">
+      <div class="section-head reveal">
         <div class="section-label">Features</div>
         <h2>Everything in one place</h2>
         <p>Run repairs, watch your system, and review what happened, without switching between tools.</p>
       </div>
       <div class="features">
-        <div class="feature">
+        <div class="feature reveal">
           <div class="feature-icon">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.4 2.4-2.4-.6-.6-2.4z"/></svg>
           </div>
           <h3>Repair tools</h3>
           <p>System, network, maintenance, security, drivers, performance, apps, cleanup, and advanced fixes using SFC, DISM, CHKDSK, and netsh.</p>
         </div>
-        <div class="feature">
+        <div class="feature reveal">
           <div class="feature-icon">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
           </div>
           <h3>Auto Monitor</h3>
           <p>Watches CPU, RAM, disk, network, services, and security settings in the background, and can send email alerts.</p>
         </div>
-        <div class="feature">
+        <div class="feature reveal">
           <div class="feature-icon">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
           </div>
           <h3>Auto-Heal</h3>
           <p>Applies fixes automatically with safeguards: cooldowns, a disable list, and a restore point before risky repairs.</p>
         </div>
-        <div class="feature">
+        <div class="feature reveal">
           <div class="feature-icon">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18"/></svg>
           </div>
           <h3>Process Manager</h3>
           <p>Suspend idle apps and resume them automatically when you return to them.</p>
         </div>
-        <div class="feature">
+        <div class="feature reveal">
           <div class="feature-icon">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
           </div>
@@ -370,11 +467,11 @@
 
   <section>
     <div class="container">
-      <div class="section-head">
+      <div class="section-head reveal">
         <div class="section-label">Before you run it</div>
         <h2>Safety first</h2>
       </div>
-      <div class="notice">
+      <div class="notice reveal">
         <p>WinRepair makes system-level changes. Back up important files before running repairs. Risky repairs create a restore point first, and destructive actions are off by default.</p>
         <p>Windows SmartScreen may warn that the app is from an unknown publisher. This is normal for independent tools. Click <strong>More info</strong>, then <strong>Run anyway</strong> only if you downloaded the file from this page.</p>
       </div>
@@ -383,7 +480,7 @@
 
   <section id="install">
     <div class="container">
-      <div class="section-head">
+      <div class="section-head reveal">
         <div class="section-label">Install</div>
         <h2>Get started in three steps</h2>
       </div>
@@ -406,11 +503,11 @@
 
   <section id="requirements">
     <div class="container">
-      <div class="section-head">
+      <div class="section-head reveal">
         <div class="section-label">Requirements</div>
         <h2>What you need</h2>
       </div>
-      <ul class="req-list">
+      <ul class="req-list reveal">
         <li>Windows 10 or Windows 11</li>
         <li>Administrator rights (most repairs require elevation)</li>
       </ul>
@@ -426,5 +523,23 @@
 </footer>
 
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "98b35bacc4434a44b1114d100968aae8"}'></script><!-- End Cloudflare Web Analytics -->
+<script>
+  (function () {
+    var items = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window)) {
+      items.forEach(function (el) { el.classList.add('visible'); });
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    items.forEach(function (el) { io.observe(el); });
+  })();
+</script>
 </body>
 </html>
