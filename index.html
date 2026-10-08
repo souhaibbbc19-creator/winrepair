@@ -108,12 +108,22 @@
   .cta { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
   .meta { font-size: 0.9rem; color: var(--muted); }
   .hero-shot {
+    display: block;
+    background: linear-gradient(145deg, #eaf1ff 0%, #f5f7fa 100%);
     border: 1px solid var(--border);
-    border-radius: var(--radius);
-    box-shadow: 0 20px 45px -20px rgba(15, 23, 42, 0.25);
-    overflow: hidden;
+    border-radius: 14px;
+    padding: 18px;
+    box-shadow: 0 24px 50px -22px rgba(15, 23, 42, 0.35);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
-  .hero-shot img { display: block; width: 100%; height: auto; }
+  .hero-shot:hover { transform: translateY(-2px); box-shadow: 0 28px 56px -22px rgba(15, 23, 42, 0.4); }
+  .hero-shot img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    border: 1px solid #1f2937;
+  }
   .caption { font-size: 0.85rem; color: var(--muted); margin-top: 12px; text-align: center; }
 
   /* Sections */
