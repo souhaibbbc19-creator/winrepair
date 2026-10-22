@@ -316,7 +316,7 @@
   }
   .hero .eyebrow, .hero h1, .hero .lead, .hero .cta {
     opacity: 0;
-    animation: fadeUp 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    animation: fadeUp 1.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
   }
   .hero h1 { animation-delay: 0.1s; }
   .hero .lead { animation-delay: 0.2s; }
@@ -335,7 +335,7 @@
   .reveal {
     opacity: 0;
     transform: translateY(26px);
-    transition: opacity 1s cubic-bezier(0.22, 1, 0.36, 1), transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: opacity 1.6s cubic-bezier(0.22, 1, 0.36, 1), transform 1.6s cubic-bezier(0.22, 1, 0.36, 1);
   }
   .reveal.visible { opacity: 1; transform: translateY(0); }
   .features .reveal:nth-child(2) { transition-delay: 0.08s; }
@@ -343,7 +343,7 @@
   .features .reveal:nth-child(4) { transition-delay: 0.24s; }
   .features .reveal:nth-child(5) { transition-delay: 0.32s; }
 
-  .feature { transition: opacity 1s cubic-bezier(0.22, 1, 0.36, 1), transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.4s ease; }
+  .feature { transition: opacity 1.6s cubic-bezier(0.22, 1, 0.36, 1), transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.4s ease; }
   .feature:hover {
     transform: translateY(-4px);
     box-shadow: 0 16px 32px -18px rgba(30, 58, 138, 0.35);
@@ -361,7 +361,7 @@
       transition: none !important;
     }
     .cursor { display: none; }
-    .feature-icon svg * { stroke-dashoffset: 0 !important; }
+    .feature-icon svg *, .brand svg * { stroke-dashoffset: 0 !important; }
     .reveal, .hero .eyebrow, .hero h1, .hero .lead, .hero .cta, .hero-shot-wrap {
       opacity: 1 !important;
       transform: none !important;
@@ -450,6 +450,13 @@
   .flow-note { margin-top: 22px; font-size: 0.92rem; color: var(--muted); max-width: 720px; }
 
 
+  /* Logo draws itself on load */
+  .brand svg * {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: drawIcon 2.2s cubic-bezier(0.37, 0, 0.2, 1) 0.2s forwards;
+  }
+
   /* Feature card animations */
   .feature { position: relative; overflow: hidden; }
   .feature::before {
@@ -468,12 +475,12 @@
     stroke-dashoffset: 1;
   }
   .feature.visible .feature-icon svg * {
-    animation: drawIcon 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.3s forwards;
+    animation: drawIcon 2.6s cubic-bezier(0.37, 0, 0.2, 1) 0.4s forwards;
   }
-  .feature.visible:nth-child(2) .feature-icon svg * { animation-delay: 0.45s; }
-  .feature.visible:nth-child(3) .feature-icon svg * { animation-delay: 0.6s; }
-  .feature.visible:nth-child(4) .feature-icon svg * { animation-delay: 0.75s; }
-  .feature.visible:nth-child(5) .feature-icon svg * { animation-delay: 0.9s; }
+  .feature.visible:nth-child(2) .feature-icon svg * { animation-delay: 0.9s; }
+  .feature.visible:nth-child(3) .feature-icon svg * { animation-delay: 1.4s; }
+  .feature.visible:nth-child(4) .feature-icon svg * { animation-delay: 1.9s; }
+  .feature.visible:nth-child(5) .feature-icon svg * { animation-delay: 2.4s; }
   @keyframes drawIcon {
     to { stroke-dashoffset: 0; }
   }
