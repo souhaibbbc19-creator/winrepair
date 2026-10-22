@@ -361,6 +361,7 @@
       transition: none !important;
     }
     .cursor { display: none; }
+    .feature-icon svg * { stroke-dashoffset: 0 !important; }
     .reveal, .hero .eyebrow, .hero h1, .hero .lead, .hero .cta, .hero-shot-wrap {
       opacity: 1 !important;
       transform: none !important;
@@ -448,6 +449,40 @@
   .flow-step.active .flow-num { background: #2563eb; color: #ffffff; }
   .flow-note { margin-top: 22px; font-size: 0.92rem; color: var(--muted); max-width: 720px; }
 
+
+  /* Feature card animations */
+  .feature { position: relative; overflow: hidden; }
+  .feature::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #3b82f6, transparent);
+    transition: left 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .feature:hover::before { left: 100%; }
+  .feature-icon svg * {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+  }
+  .feature.visible .feature-icon svg * {
+    animation: drawIcon 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.3s forwards;
+  }
+  .feature.visible:nth-child(2) .feature-icon svg * { animation-delay: 0.45s; }
+  .feature.visible:nth-child(3) .feature-icon svg * { animation-delay: 0.6s; }
+  .feature.visible:nth-child(4) .feature-icon svg * { animation-delay: 0.75s; }
+  .feature.visible:nth-child(5) .feature-icon svg * { animation-delay: 0.9s; }
+  @keyframes drawIcon {
+    to { stroke-dashoffset: 0; }
+  }
+  .feature:hover .feature-icon { animation: iconBob 1.6s ease-in-out infinite; }
+  @keyframes iconBob {
+    0%, 100% { transform: translateY(0) scale(1.08); }
+    50% { transform: translateY(-3px) scale(1.08); }
+  }
+
   /* Responsive */
   @media (max-width: 900px) {
     .hero .container { grid-template-columns: 1fr; gap: 40px; }
@@ -472,7 +507,7 @@
 <nav>
   <div class="container">
     <a class="brand" href="#top">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.4 2.4-2.4-.6-.6-2.4z"/></svg>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.4 2.4-2.4-.6-.6-2.4z"/></svg>
       WinRepair
     </a>
     <div class="nav-links">
@@ -522,35 +557,35 @@
       <div class="features">
         <div class="feature reveal">
           <div class="feature-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.4 2.4-2.4-.6-.6-2.4z"/></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path pathLength="1" d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.4 2.4-2.4-.6-.6-2.4z"/></svg>
           </div>
           <h3>Repair tools</h3>
           <p>System, network, maintenance, security, drivers, performance, apps, cleanup, and advanced fixes using SFC, DISM, CHKDSK, and netsh.</p>
         </div>
         <div class="feature reveal">
           <div class="feature-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path pathLength="1" d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
           </div>
           <h3>Auto Monitor</h3>
           <p>Watches CPU, RAM, disk, network, services, and security settings in the background, and can send email alerts.</p>
         </div>
         <div class="feature reveal">
           <div class="feature-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path pathLength="1" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
           </div>
           <h3>Auto-Heal</h3>
           <p>Applies fixes automatically with safeguards: cooldowns, a disable list, and a restore point before risky repairs.</p>
         </div>
         <div class="feature reveal">
           <div class="feature-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18"/></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect pathLength="1" x="3" y="4" width="18" height="16" rx="2"/><path pathLength="1" d="M3 10h18"/></svg>
           </div>
           <h3>Process Manager</h3>
           <p>Suspend idle apps and resume them automatically when you return to them.</p>
         </div>
         <div class="feature reveal">
           <div class="feature-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle pathLength="1" cx="12" cy="12" r="9"/><path pathLength="1" d="M12 7v5l3 2"/></svg>
           </div>
           <h3>History</h3>
           <p>Every detection and repair is logged, searchable, and exportable to CSV.</p>
