@@ -360,17 +360,100 @@
       animation: none !important;
       transition: none !important;
     }
+    .cursor { display: none; }
     .reveal, .hero .eyebrow, .hero h1, .hero .lead, .hero .cta, .hero-shot-wrap {
       opacity: 1 !important;
       transform: none !important;
     }
   }
 
+
+  /* Terminal preview */
+  .terminal {
+    margin-top: 32px;
+    background: #05050a;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px -24px rgba(37, 99, 235, 0.45);
+    max-width: 520px;
+  }
+  .terminal-bar {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 10px 14px;
+    background: #0e0e17;
+    border-bottom: 1px solid var(--border);
+  }
+  .terminal-bar span { width: 10px; height: 10px; border-radius: 50%; background: #2a2a3a; }
+  .terminal-bar span:nth-child(1) { background: #ef4444; }
+  .terminal-bar span:nth-child(2) { background: #f59e0b; }
+  .terminal-bar span:nth-child(3) { background: #22c55e; }
+  .terminal-body {
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 0.88rem;
+    color: #a5b4fc;
+    padding: 16px 18px;
+    min-height: 190px;
+    white-space: pre-wrap;
+  }
+  .terminal-body .ok { color: #4ade80; }
+  .terminal-body .prompt { color: #60a5fa; }
+  .cursor {
+    display: inline-block;
+    width: 8px;
+    height: 1em;
+    background: #60a5fa;
+    vertical-align: text-bottom;
+    animation: blink 1s steps(1) infinite;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  /* Auto-Heal flow */
+  .flow {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 14px;
+    position: relative;
+  }
+  .flow-step {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 22px 18px;
+    text-align: center;
+    transition: border-color 0.5s ease, box-shadow 0.5s ease, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .flow-num {
+    width: 34px;
+    height: 34px;
+    margin: 0 auto 12px;
+    border-radius: 50%;
+    border: 1px solid #1e3a8a;
+    color: #60a5fa;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.5s ease, color 0.5s ease;
+  }
+  .flow-step h3 { color: var(--heading); font-size: 0.98rem; font-weight: 600; margin-bottom: 6px; }
+  .flow-step p { font-size: 0.85rem; color: var(--muted); }
+  .flow-step.active {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 1px #2563eb, 0 18px 36px -20px rgba(37, 99, 235, 0.7);
+    transform: translateY(-4px);
+  }
+  .flow-step.active .flow-num { background: #2563eb; color: #ffffff; }
+  .flow-note { margin-top: 22px; font-size: 0.92rem; color: var(--muted); max-width: 720px; }
+
   /* Responsive */
   @media (max-width: 900px) {
     .hero .container { grid-template-columns: 1fr; gap: 40px; }
     h1 { font-size: 2.3rem; }
     .features { grid-template-columns: repeat(2, 1fr); }
+    .flow { grid-template-columns: repeat(2, 1fr); }
   }
   @media (max-width: 600px) {
     .nav-links a:not(.btn) { display: none; }
@@ -378,6 +461,8 @@
     h1 { font-size: 2rem; }
     h2 { font-size: 1.6rem; }
     .features { grid-template-columns: 1fr; }
+    .flow { grid-template-columns: 1fr; }
+    .terminal-body { font-size: 0.8rem; min-height: 170px; }
     section { padding: 48px 0; }
   }
 </style>
@@ -413,6 +498,10 @@
           <span class="meta">Run as Administrator</span>
         </div>
         <div class="dl-count" id="dl-count" aria-live="polite"></div>
+        <div class="terminal" aria-hidden="true">
+          <div class="terminal-bar"><span></span><span></span><span></span></div>
+          <div class="terminal-body" id="terminal-body"></div>
+        </div>
       </div>
       <div class="hero-shot-wrap">
         <a class="hero-shot" href="screenshot-dashboard.jpg" target="_blank" rel="noopener">
@@ -467,6 +556,44 @@
           <p>Every detection and repair is logged, searchable, and exportable to CSV.</p>
         </div>
       </div>
+    </div>
+  </section>
+
+  <section id="auto-heal">
+    <div class="container">
+      <div class="section-head reveal">
+        <div class="section-label">Auto-Heal</div>
+        <h2>How automatic fixes stay safe</h2>
+        <p>Auto-Heal only acts when it's allowed to. Each step checks something before the next one runs.</p>
+      </div>
+      <div class="flow reveal">
+        <div class="flow-step">
+          <div class="flow-num">1</div>
+          <h3>Detect</h3>
+          <p>A monitor check finds a problem.</p>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num">2</div>
+          <h3>Check cooldown</h3>
+          <p>Skips fixes that ran too recently.</p>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num">3</div>
+          <h3>Restore point</h3>
+          <p>Creates one before risky repairs.</p>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num">4</div>
+          <h3>Repair</h3>
+          <p>Runs the fix you've allowed.</p>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num">5</div>
+          <h3>Log</h3>
+          <p>Records what happened in History.</p>
+        </div>
+      </div>
+      <p class="flow-note">You choose which fixes Auto-Heal can apply. Anything on the disable list is never run automatically.</p>
     </div>
   </section>
 
@@ -592,6 +719,92 @@
         setTimeout(go, 1200);
       });
     });
+  })();
+</script>
+<script>
+  (function () {
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Terminal typing preview (illustrative output)
+    var lines = [
+      { text: 'C:\\> WinRepair: running selected tasks', cls: 'prompt' },
+      { text: '[1/3] System File Checker ... ', cls: '', after: 'done', afterCls: 'ok' },
+      { text: '[2/3] DISM health check ... ', cls: '', after: 'done', afterCls: 'ok' },
+      { text: '[3/3] Flush DNS cache ... ', cls: '', after: 'done', afterCls: 'ok' },
+      { text: 'Restore point created', cls: 'ok' },
+      { text: 'Repair complete. 0 errors.', cls: 'ok' }
+    ];
+    var body = document.getElementById('terminal-body');
+
+    function render(upTo, partial) {
+      var html = '';
+      for (var i = 0; i < upTo; i++) {
+        var l = lines[i];
+        html += '<div>' + (l.cls ? '<span class="' + l.cls + '">' : '') + escapeHtml(l.text) + (l.cls ? '</span>' : '') +
+          (l.after ? '<span class="' + l.afterCls + '">' + l.after + '</span>' : '') + '</div>';
+      }
+      if (partial !== undefined) {
+        html += '<div>' + partial + '<span class="cursor"></span></div>';
+      } else {
+        html += '<div><span class="cursor"></span></div>';
+      }
+      body.innerHTML = html;
+    }
+    function escapeHtml(t) {
+      return t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+
+    if (body) {
+      if (reduce) {
+        render(lines.length);
+      } else {
+        var li = 0, ci = 0, shown = [];
+        var timer;
+        function step() {
+          if (li >= lines.length) {
+            timer = setTimeout(function () { li = 0; ci = 0; shown = []; step(); }, 3500);
+            return;
+          }
+          var full = lines[li].text;
+          if (ci <= full.length) {
+            render(li, full.slice(0, ci));
+            ci++;
+            timer = setTimeout(step, 22);
+          } else {
+            li++; ci = 0;
+            timer = setTimeout(step, 380);
+          }
+        }
+        // Start only when the terminal is on screen
+        var started = false;
+        var io = new IntersectionObserver(function (entries) {
+          if (entries[0].isIntersecting && !started) { started = true; step(); }
+        }, { threshold: 0.2 });
+        io.observe(body);
+      }
+    }
+
+    // Auto-Heal flow: highlight each step in turn
+    var steps = document.querySelectorAll('.flow-step');
+    if (steps.length && !reduce) {
+      var idx = -1;
+      var flowTimer = null;
+      function highlight() {
+        steps.forEach(function (el) { el.classList.remove('active'); });
+        idx = (idx + 1) % steps.length;
+        steps[idx].classList.add('active');
+      }
+      var flowIo = new IntersectionObserver(function (entries) {
+        if (entries[0].isIntersecting) {
+          if (!flowTimer) { highlight(); flowTimer = setInterval(highlight, 1300); }
+        } else if (flowTimer) {
+          clearInterval(flowTimer); flowTimer = null;
+        }
+      }, { threshold: 0.4 });
+      flowIo.observe(document.querySelector('.flow'));
+    } else if (steps.length) {
+      steps.forEach(function (el) { el.classList.add('active'); });
+    }
   })();
 </script>
 </body>
