@@ -426,12 +426,12 @@
   .pending { color: transparent !important; }
   .type-cursor { visibility: hidden; }
   .type-cursor.live { visibility: visible; }
-  .typed, .typed h1, .typed h2 {
+  .typed, .pending {
     font-family: Consolas, "Cascadia Mono", "Courier New", monospace;
     letter-spacing: 0;
   }
-  .hero h1.typed { font-size: 2.1rem; letter-spacing: -0.3px; }
-  .lead.typed { font-size: 1rem; }
+  .hero h1.typed, .hero h1.pending { font-size: 2.1rem; letter-spacing: -0.3px; }
+  .lead.typed, .lead.pending { font-size: 1rem; }
   .section-label.typed::before { content: "> "; color: transparent; }
   .section-label.typed.live::before { color: #60a5fa; }
   .eyebrow.typed::before { content: "$ "; color: transparent; }
