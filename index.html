@@ -423,15 +423,19 @@
     animation: blink 0.9s steps(1) infinite;
   }
   .type-cursor.idle { animation: blink 1s steps(1) infinite; }
-  .typed .type-cursor { opacity: 1; }
+  .pending { color: transparent !important; }
+  .type-cursor { visibility: hidden; }
+  .type-cursor.live { visibility: visible; }
   .typed, .typed h1, .typed h2 {
     font-family: Consolas, "Cascadia Mono", "Courier New", monospace;
     letter-spacing: 0;
   }
   .hero h1.typed { font-size: 2.1rem; letter-spacing: -0.3px; }
   .lead.typed { font-size: 1rem; }
-  .section-label.typed::before { content: "> "; color: #60a5fa; }
-  .eyebrow.typed::before { content: "$ "; color: #60a5fa; }
+  .section-label.typed::before { content: "> "; color: transparent; }
+  .section-label.typed.live::before { color: #60a5fa; }
+  .eyebrow.typed::before { content: "$ "; color: transparent; }
+  .eyebrow.typed.live::before { color: #60a5fa; }
 
   /* Auto-Heal flow */
   .flow {
@@ -554,9 +558,9 @@
   <div class="blob blob-2" aria-hidden="true"></div>
     <div class="container">
       <div>
-        <span class="eyebrow">Version 1.0 &middot; Windows 10 and 11</span>
-        <h1>Fix common Windows problems from one dashboard</h1>
-        <p class="lead">WinRepair runs common diagnostics and repairs using the built-in Windows tools you already have. An optional background monitor alerts you when something looks wrong.</p>
+        <span class="eyebrow pending">Version 1.0 &middot; Windows 10 and 11</span>
+        <h1 class="pending">Fix common Windows problems from one dashboard</h1>
+        <p class="lead pending">WinRepair runs common diagnostics and repairs using the built-in Windows tools you already have. An optional background monitor alerts you when something looks wrong.</p>
         <div class="cta">
           <a class="btn dl-btn" href="https://github.com/souhaibbbc19-creator/winrepair/releases/download/v1.0/AutoHealingSystem.rar">Download v1.0 (150 MB)</a>
           <span class="meta">Run as Administrator</span>
@@ -575,8 +579,8 @@
   <section id="features">
     <div class="container">
       <div class="section-head reveal">
-        <div class="section-label">Features</div>
-        <h2>Everything in one place</h2>
+        <div class="section-label pending">Features</div>
+        <h2 class="pending">Everything in one place</h2>
         <p>Run repairs, watch your system, and review what happened, without switching between tools.</p>
       </div>
       <div class="features">
@@ -622,8 +626,8 @@
   <section id="auto-heal">
     <div class="container">
       <div class="section-head reveal">
-        <div class="section-label">Auto-Heal</div>
-        <h2>How automatic fixes stay safe</h2>
+        <div class="section-label pending">Auto-Heal</div>
+        <h2 class="pending">How automatic fixes stay safe</h2>
         <p>Auto-Heal only acts when it's allowed to. Each step checks something before the next one runs.</p>
       </div>
       <div class="flow reveal">
@@ -660,8 +664,8 @@
   <section>
     <div class="container">
       <div class="section-head reveal">
-        <div class="section-label">Before you run it</div>
-        <h2>Safety first</h2>
+        <div class="section-label pending">Before you run it</div>
+        <h2 class="pending">Safety first</h2>
       </div>
       <div class="notice reveal">
         <p>WinRepair makes system-level changes. Back up important files before running repairs. Risky repairs create a restore point first, and destructive actions are off by default.</p>
@@ -673,8 +677,8 @@
   <section id="install">
     <div class="container">
       <div class="section-head reveal">
-        <div class="section-label">Install</div>
-        <h2>Get started in three steps</h2>
+        <div class="section-label pending">Install</div>
+        <h2 class="pending">Get started in three steps</h2>
       </div>
       <ol class="steps">
         <li>
@@ -696,8 +700,8 @@
   <section id="requirements">
     <div class="container">
       <div class="section-head reveal">
-        <div class="section-label">Requirements</div>
-        <h2>What you need</h2>
+        <div class="section-label pending">Requirements</div>
+        <h2 class="pending">What you need</h2>
       </div>
       <ul class="req-list reveal">
         <li>Windows 10 or Windows 11</li>
@@ -870,58 +874,84 @@
 <script>
   (function () {
     var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduce) return;
+    if (reduce) {
+      document.querySelectorAll('.pending').forEach(function (el) { el.classList.remove('pending'); });
+      return;
+    }
 
     // Types text one character at a time with a blinking cursor
-    function typeOut(el, speed) {
-      if (el.dataset.typed) return;
+    function typeOut(el, speed, onDone) {
+      if (!el || el.dataset.typed) { if (onDone) onDone(); return; }
       el.dataset.typed = '1';
+      el.classList.remove('pending');
       var text = el.textContent;
       el.setAttribute('aria-label', text);
+
+      // Full text is always in the layout, so nothing shifts while typing.
+      // Characters that haven't been typed yet are transparent.
       el.textContent = '';
+      var shown = document.createElement('span');
       var cursor = document.createElement('span');
+      var rest = document.createElement('span');
       cursor.className = 'type-cursor';
       cursor.setAttribute('aria-hidden', 'true');
+      rest.textContent = text;
+      rest.style.color = 'transparent';
+      rest.setAttribute('aria-hidden', 'true');
+      el.appendChild(shown);
       el.appendChild(cursor);
+      el.appendChild(rest);
       el.classList.add('typed');
 
       var i = 0;
       function next() {
-        if (i < text.length) {
-          el.insertBefore(document.createTextNode(text.charAt(i)), cursor);
+        el.classList.add('live');
+        cursor.classList.add('live');
+        if (i <= text.length) {
+          shown.textContent = text.slice(0, i);
+          rest.textContent = text.slice(i);
+          var ch = text.charAt(i - 1);
           i++;
           // Slight pause after punctuation, like a real terminal
-          var ch = text.charAt(i - 1);
           var wait = /[.,:;!?]/.test(ch) ? speed * 8 : speed;
           setTimeout(next, wait);
         } else {
-          cursor.classList.add('done');
+          rest.remove();
           cursor.classList.add('idle');
+          if (onDone) setTimeout(onDone, 250);
         }
       }
       setTimeout(next, 150);
     }
 
-    // Hero text types out as soon as the page loads
+    // Hero: label, then headline, then intro, one after another
     var heroH1 = document.querySelector('.hero h1');
     var heroLead = document.querySelector('.hero .lead');
     var eyebrow = document.querySelector('.hero .eyebrow');
-    if (eyebrow) typeOut(eyebrow, 28);
-    if (heroH1) setTimeout(function () { typeOut(heroH1, 46); }, 300);
-    if (heroLead) setTimeout(function () { typeOut(heroLead, 16); }, 1800);
+    typeOut(eyebrow, 28, function () {
+      typeOut(heroH1, 46, function () {
+        typeOut(heroLead, 16);
+      });
+    });
 
-    // Section titles type out when they scroll into view
-    var titles = document.querySelectorAll('section h2, section .section-label');
+    // Sections: each section's label, then its heading, in page order
+    var heads = document.querySelectorAll('section .section-head');
     if ('IntersectionObserver' in window) {
       var io = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
           if (entry.isIntersecting) {
-            typeOut(entry.target, entry.target.tagName === 'H2' ? 36 : 22);
             io.unobserve(entry.target);
+            var label = entry.target.querySelector('.section-label');
+            var title = entry.target.querySelector('h2');
+            typeOut(label, 22, function () {
+              typeOut(title, 36);
+            });
           }
         });
       }, { threshold: 0.6 });
-      titles.forEach(function (el) { io.observe(el); });
+      heads.forEach(function (el) { io.observe(el); });
+    } else {
+      document.querySelectorAll('.pending').forEach(function (el) { el.classList.remove('pending'); });
     }
   })();
 </script>
