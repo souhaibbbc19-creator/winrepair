@@ -399,6 +399,9 @@
     min-height: 190px;
     white-space: pre-wrap;
   }
+  .terminal-hero { max-width: none; width: 100%; margin-top: 0; }
+  .terminal-hero .terminal-body { min-height: 340px; font-size: 0.95rem; padding: 20px 22px; }
+  .terminal-bar em { margin-left: auto; font-style: normal; font-size: 0.78rem; color: var(--muted); }
   .terminal-body .ok { color: #4ade80; }
   .terminal-body .prompt { color: #60a5fa; }
   .cursor {
@@ -410,6 +413,25 @@
     animation: blink 1s steps(1) infinite;
   }
   @keyframes blink { 50% { opacity: 0; } }
+  .type-cursor {
+    display: inline-block;
+    width: 0.09em;
+    height: 0.95em;
+    margin-left: 0.08em;
+    background: #60a5fa;
+    vertical-align: -0.1em;
+    animation: blink 0.9s steps(1) infinite;
+  }
+  .type-cursor.idle { animation: blink 1s steps(1) infinite; }
+  .typed .type-cursor { opacity: 1; }
+  .typed, .typed h1, .typed h2 {
+    font-family: Consolas, "Cascadia Mono", "Courier New", monospace;
+    letter-spacing: 0;
+  }
+  .hero h1.typed { font-size: 2.1rem; letter-spacing: -0.3px; }
+  .lead.typed { font-size: 1rem; }
+  .section-label.typed::before { content: "> "; color: #60a5fa; }
+  .eyebrow.typed::before { content: "$ "; color: #60a5fa; }
 
   /* Auto-Heal flow */
   .flow {
@@ -540,16 +562,12 @@
           <span class="meta">Run as Administrator</span>
         </div>
         <div class="dl-count" id="dl-count" aria-live="polite"></div>
-        <div class="terminal" aria-hidden="true">
-          <div class="terminal-bar"><span></span><span></span><span></span></div>
-          <div class="terminal-body" id="terminal-body"></div>
-        </div>
       </div>
       <div class="hero-shot-wrap">
-        <a class="hero-shot" href="screenshot-dashboard.jpg" target="_blank" rel="noopener">
-          <img src="screenshot-dashboard.jpg" alt="WinRepair dashboard showing repair tasks and Auto Monitor status">
-        </a>
-        <p class="caption">The dashboard with repair tasks and Auto Monitor status. Click to view full size.</p>
+        <div class="terminal terminal-hero" aria-hidden="true">
+          <div class="terminal-bar"><span></span><span></span><span></span><em>WinRepair</em></div>
+          <div class="terminal-body" id="terminal-body"></div>
+        </div>
       </div>
     </div>
   </header>
@@ -846,6 +864,64 @@
       flowIo.observe(document.querySelector('.flow'));
     } else if (steps.length) {
       steps.forEach(function (el) { el.classList.add('active'); });
+    }
+  })();
+</script>
+<script>
+  (function () {
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce) return;
+
+    // Types text one character at a time with a blinking cursor
+    function typeOut(el, speed) {
+      if (el.dataset.typed) return;
+      el.dataset.typed = '1';
+      var text = el.textContent;
+      el.setAttribute('aria-label', text);
+      el.textContent = '';
+      var cursor = document.createElement('span');
+      cursor.className = 'type-cursor';
+      cursor.setAttribute('aria-hidden', 'true');
+      el.appendChild(cursor);
+      el.classList.add('typed');
+
+      var i = 0;
+      function next() {
+        if (i < text.length) {
+          el.insertBefore(document.createTextNode(text.charAt(i)), cursor);
+          i++;
+          // Slight pause after punctuation, like a real terminal
+          var ch = text.charAt(i - 1);
+          var wait = /[.,:;!?]/.test(ch) ? speed * 8 : speed;
+          setTimeout(next, wait);
+        } else {
+          cursor.classList.add('done');
+          cursor.classList.add('idle');
+        }
+      }
+      setTimeout(next, 150);
+    }
+
+    // Hero text types out as soon as the page loads
+    var heroH1 = document.querySelector('.hero h1');
+    var heroLead = document.querySelector('.hero .lead');
+    var eyebrow = document.querySelector('.hero .eyebrow');
+    if (eyebrow) typeOut(eyebrow, 28);
+    if (heroH1) setTimeout(function () { typeOut(heroH1, 46); }, 300);
+    if (heroLead) setTimeout(function () { typeOut(heroLead, 16); }, 1800);
+
+    // Section titles type out when they scroll into view
+    var titles = document.querySelectorAll('section h2, section .section-label');
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            typeOut(entry.target, entry.target.tagName === 'H2' ? 36 : 22);
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.6 });
+      titles.forEach(function (el) { io.observe(el); });
     }
   })();
 </script>
