@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>WinRepair - Windows 10 and 11 Auto Repair Tool</title>
-<meta name="description" content="WinRepair is a Windows 10/11 auto repair tool with one-click diagnostics, network and system fixes, and a background monitor.">
+<title>AutoFix - Windows 10 and 11 Repair Tool</title>
+<meta name="description" content="AutoFix scans a Windows 10/11 PC for common problems and fixes the ones you choose: storage, network, updates, services, and system files.">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
@@ -541,13 +541,13 @@
   <div class="container">
     <a class="brand" href="#top">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path pathLength="1" d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.4 2.4-2.4-.6-.6-2.4z"/></svg>
-      WinRepair
+      AutoFix
     </a>
     <div class="nav-links">
       <a href="#features">Features</a>
       <a href="#install">Install</a>
       <a href="#requirements">Requirements</a>
-      <a class="btn btn-small dl-btn" href="https://github.com/souhaibbbc19-creator/winrepair/releases/download/v1.0/AutoHealingSystem.rar">Download</a>
+      <a class="btn btn-small dl-btn" href="https://github.com/souhaibbbc19-creator/winrepair/releases/download/autofix-v1.0/AutoFix.zip">Download</a>
     </div>
   </div>
 </nav>
@@ -560,16 +560,16 @@
       <div>
         <span class="eyebrow pending">Version 1.0 &middot; Windows 10 and 11</span>
         <h1 class="pending">Fix common Windows problems from one dashboard</h1>
-        <p class="lead pending">WinRepair runs common diagnostics and repairs using the built-in Windows tools you already have. An optional background monitor alerts you when something looks wrong.</p>
+        <p class="lead pending">AutoFix scans your PC for common problems and fixes the ones you choose, using the built-in Windows tools you already have.</p>
         <div class="cta">
-          <a class="btn dl-btn" href="https://github.com/souhaibbbc19-creator/winrepair/releases/download/v1.0/AutoHealingSystem.rar">Download v1.0 (150 MB)</a>
-          <span class="meta">Run as Administrator</span>
+          <a class="btn dl-btn" href="https://github.com/souhaibbbc19-creator/winrepair/releases/download/autofix-v1.0/AutoFix.zip">Download v1.0 (ZIP, under 1 MB)</a>
+          <span class="meta">Needs administrator access</span>
         </div>
         <div class="dl-count" id="dl-count" aria-live="polite"></div>
       </div>
       <div class="hero-shot-wrap">
         <div class="terminal terminal-hero" aria-hidden="true">
-          <div class="terminal-bar"><span></span><span></span><span></span><em>WinRepair</em></div>
+          <div class="terminal-bar"><span></span><span></span><span></span><em>AutoFix</em></div>
           <div class="terminal-body" id="terminal-body"></div>
         </div>
       </div>
@@ -581,7 +581,7 @@
       <div class="section-head reveal">
         <div class="section-label pending">Features</div>
         <h2 class="pending">Everything in one place</h2>
-        <p>Run repairs, watch your system, and review what happened, without switching between tools.</p>
+        <p>Scan your PC, choose what to fix, and review what happened, all in one window.</p>
       </div>
       <div class="features">
         <div class="feature reveal">
@@ -589,75 +589,75 @@
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path pathLength="1" d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.4 2.4-2.4-.6-.6-2.4z"/></svg>
           </div>
           <h3>Repair tools</h3>
-          <p>System, network, maintenance, security, drivers, performance, apps, cleanup, and advanced fixes using SFC, DISM, CHKDSK, and netsh.</p>
+          <p>Clean up storage, reset network settings, repair Windows Update, restart services, and run DISM and SFC system file repair.</p>
         </div>
         <div class="feature reveal">
           <div class="feature-icon">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path pathLength="1" d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
           </div>
-          <h3>Auto Monitor</h3>
-          <p>Watches CPU, RAM, disk, network, services, and security settings in the background, and can send email alerts.</p>
+          <h3>Full scan</h3>
+          <p>Checks storage, network, updates and security, services, apps, and system health, and marks what needs attention.</p>
         </div>
         <div class="feature reveal">
           <div class="feature-icon">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path pathLength="1" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
           </div>
-          <h3>Auto-Heal</h3>
-          <p>Applies fixes automatically with safeguards: cooldowns, a disable list, and a restore point before risky repairs.</p>
+          <h3>Safe fixes</h3>
+          <p>Lists what will run and asks you to confirm first. AutoFix tries to create a restore point before it starts.</p>
         </div>
         <div class="feature reveal">
           <div class="feature-icon">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect pathLength="1" x="3" y="4" width="18" height="16" rx="2"/><path pathLength="1" d="M3 10h18"/></svg>
           </div>
-          <h3>Process Manager</h3>
-          <p>Suspend idle apps and resume them automatically when you return to them.</p>
+          <h3>Select issues</h3>
+          <p>One click ticks everything that needs attention. Fixes that clear print jobs or schedule a disk check are never ticked for you.</p>
         </div>
         <div class="feature reveal">
           <div class="feature-icon">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle pathLength="1" cx="12" cy="12" r="9"/><path pathLength="1" d="M12 7v5l3 2"/></svg>
           </div>
-          <h3>History</h3>
-          <p>Every detection and repair is logged, searchable, and exportable to CSV.</p>
+          <h3>Activity log</h3>
+          <p>Each scan and fix appears in the Activity panel as it happens, marked OK or FAIL.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="auto-heal">
+  <section id="how-it-works">
     <div class="container">
       <div class="section-head reveal">
-        <div class="section-label pending">Auto-Heal</div>
-        <h2 class="pending">How automatic fixes stay safe</h2>
-        <p>Auto-Heal only acts when it's allowed to. Each step checks something before the next one runs.</p>
+        <div class="section-label pending">How it works</div>
+        <h2 class="pending">How a fix runs</h2>
+        <p>Nothing runs until you confirm it. This is what happens when you press Fix selected.</p>
       </div>
       <div class="flow reveal">
         <div class="flow-step">
           <div class="flow-num">1</div>
-          <h3>Detect</h3>
-          <p>A monitor check finds a problem.</p>
+          <h3>Scan</h3>
+          <p>Checks your PC when the app opens or you press Scan.</p>
         </div>
         <div class="flow-step">
           <div class="flow-num">2</div>
-          <h3>Check cooldown</h3>
-          <p>Skips fixes that ran too recently.</p>
+          <h3>Select</h3>
+          <p>Tick items yourself, or press Select issues.</p>
         </div>
         <div class="flow-step">
           <div class="flow-num">3</div>
-          <h3>Restore point</h3>
-          <p>Creates one before risky repairs.</p>
+          <h3>Confirm</h3>
+          <p>Shows the list of fixes and waits for your OK.</p>
         </div>
         <div class="flow-step">
           <div class="flow-num">4</div>
-          <h3>Repair</h3>
-          <p>Runs the fix you've allowed.</p>
+          <h3>Restore point</h3>
+          <p>Tries to create one before anything changes.</p>
         </div>
         <div class="flow-step">
           <div class="flow-num">5</div>
-          <h3>Log</h3>
-          <p>Records what happened in History.</p>
+          <h3>Fix</h3>
+          <p>Runs each fix, logs the result, and rescans.</p>
         </div>
       </div>
-      <p class="flow-note">You choose which fixes Auto-Heal can apply. Anything on the disable list is never run automatically.</p>
+      <p class="flow-note">You choose every fix. Items that clear print jobs or schedule a disk check are never ticked for you.</p>
     </div>
   </section>
 
@@ -668,8 +668,8 @@
         <h2 class="pending">Safety first</h2>
       </div>
       <div class="notice reveal">
-        <p>WinRepair makes system-level changes. Back up important files before running repairs. Risky repairs create a restore point first, and destructive actions are off by default.</p>
-        <p>Windows SmartScreen may warn that the app is from an unknown publisher. This is normal for independent tools. Click <strong>More info</strong>, then <strong>Run anyway</strong> only if you downloaded the file from this page.</p>
+        <p>AutoFix makes system-level changes. Back up important files before running fixes. It tries to create a restore point first, but Windows can skip it, for example when System Restore is turned off.</p>
+        <p>Windows may warn that the publisher could not be verified. This is normal for independent tools. Click <strong>Run</strong> (or <strong>More info</strong>, then <strong>Run anyway</strong>) only if you downloaded the file from this page.</p>
       </div>
     </div>
   </section>
@@ -683,15 +683,15 @@
       <ol class="steps">
         <li>
           <span class="step-num">1</span>
-          <div>Download the .rar file using the button at the top of this page.</div>
+          <div>Download the .zip file using the button at the top of this page.</div>
         </li>
         <li>
           <span class="step-num">2</span>
-          <div>Extract it with WinRAR or 7-Zip.</div>
+          <div>Right-click the file and choose <strong>Extract All</strong>.</div>
         </li>
         <li>
           <span class="step-num">3</span>
-          <div>Open the <code>AutoHealingSystem</code> folder and run <code>dist\WinRepair.exe</code> as Administrator.</div>
+          <div>Open the extracted folder and double-click <code>Start AutoFix.bat</code>. Click <strong>Yes</strong> when Windows asks for administrator access.</div>
         </li>
       </ol>
     </div>
@@ -706,6 +706,7 @@
       <ul class="req-list reveal">
         <li>Windows 10 or Windows 11</li>
         <li>Administrator rights (most repairs require elevation)</li>
+        <li>Windows PowerShell 5.1, which is included with Windows 10 and 11</li>
       </ul>
     </div>
   </section>
@@ -713,7 +714,7 @@
 
 <footer>
   <div class="container">
-    <p>&copy; 2026 WinRepair. All rights reserved.</p>
+    <p>&copy; 2026 AutoFix. All rights reserved.</p>
     <p>Questions, bug reports, or feedback? <a class="contact" href="https://github.com/souhaibbbc19-creator/winrepair/issues" target="_blank" rel="noopener">Open an issue on GitHub</a></p>
   </div>
 </footer>
@@ -791,12 +792,12 @@
 
     // Terminal typing preview (illustrative output)
     var lines = [
-      { text: 'C:\\> WinRepair: running selected tasks', cls: 'prompt' },
-      { text: '[1/3] System File Checker ... ', cls: '', after: 'done', afterCls: 'ok' },
-      { text: '[2/3] DISM health check ... ', cls: '', after: 'done', afterCls: 'ok' },
-      { text: '[3/3] Flush DNS cache ... ', cls: '', after: 'done', afterCls: 'ok' },
+      { text: 'C:\\> AutoFix: fixing selected items', cls: 'prompt' },
       { text: 'Restore point created', cls: 'ok' },
-      { text: 'Repair complete. 0 errors.', cls: 'ok' }
+      { text: '[1/3] Clear user temp files ... ', cls: '', after: 'done', afterCls: 'ok' },
+      { text: '[2/3] Restart Windows Update service ... ', cls: '', after: 'done', afterCls: 'ok' },
+      { text: '[3/3] Flush DNS cache ... ', cls: '', after: 'done', afterCls: 'ok' },
+      { text: 'Done. List refreshed. ', cls: 'ok' }
     ];
     var body = document.getElementById('terminal-body');
 
